@@ -1,0 +1,1 @@
+Learn about HTML canvas to draw the game world

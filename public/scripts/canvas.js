@@ -8,7 +8,7 @@ document.addEventListener("DOMContentLoaded", function() {
   
     const scale = .66
 
-    renderBoard(ctx)
+    //renderBoard(ctx)
     
     const pawnContent = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 237.73 292.27"><defs><style>.cls-1{stroke:#e6e6e6;stroke-linecap:round;stroke-width:14px;}</style></defs><title>b_pawn_svg_NoShadow</title><g id="Layer_2" data-name="Layer 2"><g id="Layer_1-2" data-name="Layer 1"><path class="cls-1" d="M118.86,7C97.37,7,80,23.33,80,43.49a35.13,35.13,0,0,0,7.59,21.71c-19,10.22-31.91,29.29-31.91,51.27,0,18.52,9.14,35,23.44,45.89C49.9,172,7,213,7,285.27H230.73c0-72.26-42.9-113.22-72.08-122.9,14.3-10.86,23.44-27.37,23.44-45.89,0-22-12.94-41.06-31.91-51.27a35.13,35.13,0,0,0,7.59-21.71C157.77,23.33,140.36,7,118.86,7Z"/></g></g></svg>'
     const pawnBlob = new Blob([pawnContent], {type: 'image/svg+xml'})
@@ -61,11 +61,16 @@ document.addEventListener("DOMContentLoaded", function() {
       }
   
       // Function to redraw the canvas
-      function redrawCanvas() {
+      async function redrawCanvas() {
+          //ctx.clearRect(0, 0, canvas.width, canvas.height);
           ctx.clearRect(0, 0, canvas.width, canvas.height);
-          renderBoard(ctx)
 
           ctx.drawImage(element.image, element.x, element.y, element.width, element.height);
+          await renderBoard(ctx)
+
+
+
+
       }
   
       // Initial redraw
@@ -121,4 +126,5 @@ function renderBoard(ctx) {
       pointerY += squareSize
     }
   }
+  return 0
 }

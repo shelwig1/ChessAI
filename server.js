@@ -7,6 +7,6 @@ app.use(express.static('public'))
 
 app.get('/', (req, res) => {
     //res.render("index")
-    res.render("board")
+    res.render("childTest")
 })
 app.listen(3000, () => console.log('Server has started'))

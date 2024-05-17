@@ -1,8 +1,10 @@
 const newDiv = document.createElement('div')
 newDiv.id = "testicles2"
 const oldDiv = document.getElementById('testicles')
+const board = document.querySelector("#board")
 
-oldDiv.appendChild(newDiv)
+createChessboard()
+dragElement(document.getElementById("testicles"));
 
 fetch('../b_pawn.svg')
     .then(response => response.text())
@@ -11,27 +13,22 @@ fetch('../b_pawn.svg')
         tempDiv.innerHTML = svgString.trim()
         const svgElement = tempDiv.firstChild
         oldDiv.appendChild(svgElement)
-        newDiv.appendChild(svgElement)
     })
 
 
-// We can append the fella multiple times, so that's not the problem...
-
-dragElement(document.getElementById("testicles"));
-
+// Creating draggable fella from here works - how to get the image going    
+const dragTest = document.createElement('div')
+dragTest.classList.add('drag')
+dragTest.id = 'dragTest'
+dragTest.innerText = 'DRAGTEST'
+board.appendChild(dragTest)
 
 const draggables = document.querySelectorAll(".drag")
-console.log("Draggables: ", draggables)
 
 for (let i = 0; i < draggables.length; i++){
-    //console.log(draggables[i])
     dragElement(draggables[i])
 }
 
-/* document.addEventListener("click", function(event) {
-    console.log(event.target)
-})
- */
 function dragElement(elmnt) {
         var pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
         if (document.getElementById(elmnt.id + "header")) {
@@ -40,7 +37,7 @@ function dragElement(elmnt) {
         } else {
             // otherwise, move the DIV from anywhere inside the DIV:
             elmnt.onmousedown = dragMouseDown;
-            console.log("Made dragable ", elmnt)
+            //console.log("Made dragable ", elmnt)
         }
   function dragMouseDown(event) {
     event = event || window.event;
@@ -73,3 +70,27 @@ function dragElement(elmnt) {
     document.onmousemove = null;
   }
 }
+
+function createChessboard() {
+    const board = document.querySelector('.board');
+    const letters = ['a','b','c','d','e','f','g','h']
+    for (let row = 8; row >= 1; row--) {
+      for (let col = 1; col <= 8; col++) {
+        const isBlack = (row + col) % 2 === 0;
+        const square = document.createElement('div');
+        square.classList.add('square');
+        square.classList.add(isBlack ? 'black' : 'white');
+        //square.classList.add("svg-container")
+
+        //square.textContent = letters[col - 1] + '' + row
+        square.id = letters[col - 1] + '' + row
+        // Append square to the board
+        board.appendChild(square);
+      }
+    }
+  }
+
+
+
+
+// TODO -> make it work over an existing board without freaking out the SVG files

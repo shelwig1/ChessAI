@@ -1,15 +1,10 @@
 function createChessboard() {
     const board = document.querySelector('.board');
     const letters = ['a','b','c','d','e','f','g','h']
-    // Loop through rows
     for (let row = 8; row >= 1; row--) {
-      // Inner loop for columns
       for (let col = 1; col <= 8; col++) {
-        // Determine square color based on row and column
         const isBlack = (row + col) % 2 === 0;
-        // Create square element
         const square = document.createElement('div');
-        // Add classes
         square.classList.add('square');
         square.classList.add(isBlack ? 'black' : 'white');
         //square.classList.add("svg-container")

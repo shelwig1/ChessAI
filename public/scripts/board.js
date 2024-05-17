@@ -1,3 +1,5 @@
+import setup from './setupBoard.js'
+
 function createChessboard() {
     const board = document.querySelector('.board');
     const letters = ['a','b','c','d','e','f','g','h']
@@ -17,6 +19,7 @@ function createChessboard() {
     }
   }
 
+
 function addPawn() {
     const square = document.querySelector('#a1')
     
@@ -27,31 +30,45 @@ function addPawn() {
             tempDiv.innerHTML = svgString.trim()
 
             const svgElement = tempDiv.firstChild
-            svgElement.id = "Black-Pawn"
-            svgElement.classList.add("drag")
-            svgElement.draggable = true
-            
-            svgElement.addEventListener("mousedown", function(event) {
-                if (event.currentTarget === svgElement) {
-                    console.log("yipee")
-                }
-            })
-            square.appendChild(svgElement)
+            const containerDiv = document.createElement('div')
+            containerDiv.classList.add('drag')
+            containerDiv.id = "BlackPawn"
+            containerDiv.appendChild(svgElement)
+            board.appendChild(containerDiv)
+
         })
         .catch(error => console.error('Error fetching SVG:', error))
-
-    //square.textContent = "HERE"
+    console.log("Made within add pawn:" ,document.querySelectorAll(".drag"))
+    test()
 }
 
-  // Call the function to create the chessboard
-document.addEventListener("DOMContentLoaded", function() {
-  createChessboard();
-  addPawn()
-  //console.log(document.querySelectorAll('.drag'));      // NodeList
-  const square = document.getElementById('a2')
-  const pawn = document.getElementById("Black-Pawn")
-  console.log(square, " ", pawn)
-  square.appendChild(pawn)
-})
+/* document.addEventListener("DOMContentLoaded", function() {
 
-// Can I just reparent to move these fuckers around?
+
+/*   const board = document.querySelector('.board')
+  console.log(board)
+  const square = document.querySelector('#a1')
+  console.log(square)
+  const pawn = document.querySelector('#BlackPawn')
+  console.log(pawn)
+ 
+
+}) */
+
+function test(){
+  
+  const tempDiv = document.createElement('div')
+  tempDiv.classList.add('drag')
+  tempDiv.innerText = 'TEST DIV'
+  board.appendChild(tempDiv)
+  console.log(document.getElementById("BlackPawn"))
+  console.log("Drag attempt" ,document.getElementsByClassName('.drag'))
+}
+
+setup()
+createChessboard();
+addPawn()
+
+
+
+// Doesn't work when it's done within a fetch block

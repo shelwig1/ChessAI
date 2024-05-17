@@ -6,6 +6,7 @@ const board = document.querySelector("#board")
 createChessboard()
 dragElement(document.getElementById("testicles"));
 
+function pawn() {
 fetch('../b_pawn.svg')
     .then(response => response.text())
     .then(svgString => {
@@ -14,8 +15,9 @@ fetch('../b_pawn.svg')
         const svgElement = tempDiv.firstChild
         oldDiv.appendChild(svgElement)
     })
+  }
 
-
+pawn()
 // Creating draggable fella from here works - how to get the image going    
 const dragTest = document.createElement('div')
 dragTest.classList.add('drag')
@@ -24,6 +26,7 @@ dragTest.innerText = 'DRAGTEST'
 board.appendChild(dragTest)
 
 const draggables = document.querySelectorAll(".drag")
+console.log(draggables)
 
 for (let i = 0; i < draggables.length; i++){
     dragElement(draggables[i])
@@ -37,7 +40,7 @@ function dragElement(elmnt) {
         } else {
             // otherwise, move the DIV from anywhere inside the DIV:
             elmnt.onmousedown = dragMouseDown;
-            //console.log("Made dragable ", elmnt)
+            console.log("Made dragable ", elmnt)
         }
   function dragMouseDown(event) {
     event = event || window.event;

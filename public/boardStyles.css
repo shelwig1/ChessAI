@@ -40,10 +40,8 @@ svg {
 }
 
 
-
 .drag {
-  position: absolute;
-  cursor: grab;
-  transition: transform 0.0 ease 0.0;  /* Smooths out the transform motion */
-
+  position:absolute;
+  height: 50px;
+  width: 50px;
 }

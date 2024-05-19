@@ -8,12 +8,12 @@ export default function dragElement(elmnt) {
     } else {
         // otherwise, move the DIV from anywhere inside the DIV:
         elmnt.onmousedown = dragMouseDown;
-        console.log("Made dragable ", elmnt)
+        //console.log("Made dragable ", elmnt)
     }
 
 function dragMouseDown(event) {
         event = event || window.event;
-        console.log("Mouse down on doodad")
+        //console.log("Mouse down on doodad")
         event.preventDefault();
         // get the mouse cursor position at startup:
         pos3 = event.clientX;
@@ -52,12 +52,17 @@ function snap() {
         top: child.top - parent.top,
         left: child.left - parent.left
     }
-    console.log("Relative pos: ", relativePos)
+    //console.log("Relative pos: ", relativePos)
     let relativeTop = Math.round((child.top - parent.top) / 50)  * 50
     let relativeLeft = Math.round((child.left - parent.left) / 50)  * 50
+
+    if (relativeTop > 350) { relativeTop = 350}
+    if (relativeLeft > 350) {relativeLeft = 350}
     
     elmnt.style.top = relativeTop + 'px'
     elmnt.style.left = relativeLeft + 'px'
+
+    //console.log("New position: ", relativeTop, " ", relativeLeft)
     }
 
 }

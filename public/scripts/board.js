@@ -1,5 +1,6 @@
 import {pawnSVG} from './pieceSVGs.js'
 import dragElement from './drag.js'
+import moveHandler from './moveHandler.js';
 //import fetchPawn from './setupBoard.js'
 
 
@@ -14,12 +15,27 @@ function createChessboard() {
         square.classList.add(isBlack ? 'black' : 'white');
         //square.classList.add("svg-container")
 
-        square.textContent = letters[col - 1] + '' + row
+        //square.textContent = letters[col - 1] + '' + row
         square.id = letters[col - 1] + '' + row
         // Append square to the board
         board.appendChild(square);
+
+
+        const moveDot = '<svg><circle cx="25" cy="25" r="10" fill="rgba(255, 0, 0, 0.5)" /></svg>'
+  
+        const tempDiv = document.createElement('div')
+        tempDiv.innerHTML =  moveDot.trim()
+        const svgElement = tempDiv.firstChild
+        svgElement.classList.add('moveDot')
+        svgElement.classList.add('hidden')
+        square.appendChild(svgElement)
+
+        
       }
     }
+    /* const highlightHolder = document.createElement('div')
+    highlightHolder.id = 'highlightHolder'
+    board.appendChild(highlightHolder) */
   }
 
 // Inputs: pieceType, location
@@ -33,6 +49,9 @@ function addPieces(location) {
   const pieceHolder = document.createElement('div')
 
   pieceHolder.classList.add('drag')
+  pieceHolder.classList.add('blackPiece')
+  pieceHolder.classList.add('pawn')
+
   pieceHolder.id = 'BlackPawn'
   pieceHolder.appendChild(svgElement)
   const board = document.querySelector('.board')
@@ -44,17 +63,37 @@ function addPieces(location) {
 
   pieceHolder.style.top = (8 - number) * 50 + 'px'
   pieceHolder.style.left = letter * 50 + 'px'
+
+  pieceHolder.addEventListener("click", function () {
+    console.log("Clicked a piece")
+    moveHandler(pieceHolder)
+  })
 }
 
 //setup()
 createChessboard();
 addPieces()
-
+addMoveDot()
 const draggables = document.querySelectorAll('.drag')
 
 for (let i = 0; i < draggables.length; i++){
   dragElement(draggables[i])
 } 
+
+
+function addMoveDot() {  
+  const moveDot = '<svg><circle cx="25" cy="25" r="10" fill="rgba(255, 0, 0, 0.5)" /></svg>'
+  
+  const tempDiv = document.createElement('div')
+  tempDiv.innerHTML =  moveDot.trim()
+  const svgElement = tempDiv.firstChild
+  svgElement.classList.add('moveDot')
+  
+  const square = document.getElementById("f3")
+  console.log(square)
+  //square.appendChild(svgElement)
+
+}
 //fetchPawn();
 //addPawn()
 

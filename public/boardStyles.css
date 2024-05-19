@@ -1,8 +1,14 @@
+body {
+  padding: 0;
+  margin: 0;
+}
+
 .board {
-    display: grid;
-    grid-template-columns: repeat(8, 50px);
-    grid-template-rows: repeat(8, 50px);
-  }
+  display: grid;
+  grid-template-columns: repeat(8, 50px);
+  grid-template-rows: repeat(8, 50px);
+
+}
   .square {
     width: 50px;
     height: 50px;
@@ -19,29 +25,21 @@
     color: white;
   }
 
-.svg-container {
+  .svg-container {
   width: 50px; 
   height: 50px; 
   overflow: hidden;
   position: relative;
-} 
-
-
-.svg-container svg {
-  position: absolute;
-  width: 100%; 
-  height: 100%; 
-  top: 0;
-  left: 0;
-} 
-
-svg {
-  scale: 50%;
-}
+}   
 
 
 .drag {
   position:absolute;
   height: 50px;
   width: 50px;
+}
+
+svg {
+  width: 50px;
+  height: 50px;
 }

@@ -1,3 +1,6 @@
+import {pawnSVG} from './pieceSVGs.js'
+
+
 const newDiv = document.createElement('div')
 newDiv.id = "testicles2"
 const oldDiv = document.getElementById('testicles')
@@ -18,6 +21,16 @@ fetch('../b_pawn.svg')
   }
 
 pawn()
+const containerDiv = document.createElement('div')
+containerDiv.classList.add('drag')
+const tempDiv = document.createElement('div')
+  tempDiv.innerHTML = pawnSVG.trim()
+  const svgElement = tempDiv.firstChild
+  svgElement.id = "BlackPawn"
+  svgElement.classList.add('drag', 'blackPiece')
+  containerDiv.appendChild(svgElement)
+  board.appendChild(containerDiv)
+
 // Creating draggable fella from here works - how to get the image going    
 const dragTest = document.createElement('div')
 dragTest.classList.add('drag')
@@ -55,6 +68,7 @@ function dragElement(elmnt) {
   }
 
   function elementDrag(event) {
+    console.log("Mouse drag happened")
     event = event || window.event;
     event.preventDefault();
     // calculate the new cursor position:

@@ -64,9 +64,38 @@ function addPieces(location) {
   pieceHolder.style.top = (8 - number) * 50 + 'px'
   pieceHolder.style.left = letter * 50 + 'px'
 
-  pieceHolder.addEventListener("click", function () {
-    console.log("Clicked a piece")
-    moveHandler(pieceHolder)
+  pieceHolder.addEventListener("pointerdown",  function () {
+    console.log("Created event listener")
+
+    let timerId
+    document.addEventListener('pointerdown', handlePointerDown)
+    document.addEventListener('pointerup', handlePointerUp)
+    document.addEventListener('click', handleClick)
+
+    function handlePointerDown() {
+        // Start the timer for a long press
+        timerId = setTimeout(handleClickAndHold, 50); // Adjust the time threshold as needed
+    }
+    
+    function handlePointerUp() {
+        // If mouse is released before the timer expires, clear the timer
+        clearTimeout(timerId);
+    }
+    
+    function handleClick() {
+        // Handle regular click action
+        console.log('Clicked');
+    }
+    
+    function handleClickAndHold() {
+        // Handle click-and-hold action
+        console.log('Held');
+    }
+
+    //moveHandler(pieceHolder)
+    // Create arguments we pass to moveHolder that stipulate what kinda dealio we're looking at.
+    // Make the moveHandler as modular is possible to prevent the gay.
+
   })
 }
 

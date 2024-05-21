@@ -44,10 +44,13 @@ function addPieces(location) {
   const pieceHolder = document.createElement('div')
 
   pieceHolder.classList.add('drag')
-  pieceHolder.classList.add('blackPiece')
-  pieceHolder.classList.add('pawn')
+  //pieceHolder.classList.add('blackPiece')
+  //pieceHolder.classList.add('pawn')
+  pieceHolder.setAttribute('data-piece', 'pawn');
+  pieceHolder.setAttribute('data-team', 'black');
+  pieceHolder.setAttribute('data-moved', 'false')
 
-  pieceHolder.id = 'BlackPawn'
+  //pieceHolder.id = 'BlackPawn'
   pieceHolder.appendChild(svgElement)
   const board = document.querySelector('.board')
   board.appendChild(pieceHolder)
@@ -90,7 +93,7 @@ function addPieces(location) {
       document.removeEventListener('pointerdown', handlePointerDown)
       document.removeEventListener('pointerup', handlePointerUp)
       document.removeEventListener('click', handleClick)
-      console.log("REMOVED EVENT LISTENERS")
+      //console.log("REMOVED EVENT LISTENERS")
     }
   })
 }

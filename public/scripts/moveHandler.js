@@ -1,3 +1,9 @@
+/*
+BUGS
+
+- can put pieces in the wrong spot by click and dragging rapidly
+*/
+
 
 export default function moveHandler(piece, drag) {
     console.log("moveHandler started")
@@ -6,7 +12,9 @@ export default function moveHandler(piece, drag) {
     const originalLeft = piece.style.left
 
     // TODO -> generate valid squares based off piece rules
-    const validSquares = ['e3', 'e4']
+    const validSquares = generateValidMoves(piece)
+    //const validSquares = ['e3', 'e4']
+
     let highlightedSquares = []
     for (let i = 0; i < validSquares.length; i++) {
         const square = document.querySelector('#'+ validSquares[i])
@@ -17,20 +25,22 @@ export default function moveHandler(piece, drag) {
     }
 
     if (drag) {
-        console.log("Drag is true")
+        //console.log("Drag is true")
         document.addEventListener('pointerup', handlePointerUp)
     } else {
-        console.log("Drag is false")
+        //console.log("Drag is false")
         document.addEventListener('click', handleClick)
     }
 
     function handlePointerUp() {
         const dropPos = pixelsToCoord({top: piece.style.top, left: piece.style.left})
-        console.log(dropPos)
+        //console.log(dropPos)
         
         if (!validSquares.includes(dropPos)) {
             piece.style.top = originalTop
             piece.style.left = originalLeft
+        } else {
+            piece.setAttribute('data-moved', 'true')
         }
 
         document.removeEventListener('pointerup', handlePointerUp)
@@ -38,14 +48,16 @@ export default function moveHandler(piece, drag) {
     }
 
     function handleClick() {
-        console.log("Handled click")
+        //console.log("Handled click")
         for (let element in highlightedSquares) {
             if (highlightedSquares[element].contains(event.target)) {
                 const newPos = coordToPixel(highlightedSquares[element].id)
 
                 piece.style.top = newPos.topSpace
                 piece.style.left = newPos.leftSpace
-                console.log("Moved piece cleanup call")
+                piece.setAttribute('data-moved', 'true')
+
+                //console.log("Moved piece cleanup call")
             }
         }
         document.removeEventListener('click', handleClick)
@@ -79,4 +91,62 @@ function coordToPixel(data) {
     const topSpace = (8 - number) * 50 + 'px'
 
     return ({topSpace, leftSpace})
+}
+
+function generateValidMoves(piece) {
+    // Pawn - forward
+    // Queen - horizontal, diagonal, 1 square around
+    // Knight - L shape
+    // Rook - horizontal
+    // Bishop - diagonal
+    // King - 1 square around
+
+    // TODO -> how to handle team -> invert the directions we look for "forward"
+
+
+    // Push to this array as we go through, then finish and return
+    let validSquares = []
+    const pieceType = piece.getAttribute('data-piece')
+    const team = piece.getAttribute('data-team')
+    const startingPos = pixelsToCoord({top: piece.style.top, left: piece.style.left})
+    const startingCol = startingPos.charAt(0)
+    const startingRow = startingPos.charAt(1)
+    const moved = "true" === piece.getAttribute('data-moved')
+
+    pawn()
+    // pawn
+    //  Two on initial move
+    //  One on subsequent moves
+    //  En-passant goodies
+    function pawn() {
+    /* EDGE CASES
+    - on reaching the enemy start rank, we can click and drag anywhere
+    
+    TODO -> implement promotions
+    */
+
+
+        if (!moved) {
+            // take current pos and move 2 ranks "forward"
+            for (let i = 1; i < 3; i++) {
+                //console.log("Valid squares include: ", startingCol + (parseInt(startingRow) + i))
+                validSquares.push(startingCol + (parseInt(startingRow) + i))
+            }
+        } else { 
+            validSquares.push(startingCol + (parseInt(startingRow) + 1))
+        }
+    }
+    // horizontalCast
+
+    // diagonalCast
+
+    // oneAround
+
+    // knightAsshole
+
+    // Check rules
+        // Are any of these moves off the board?
+        // Before the move, can I physically get there?
+        // After the move, would I be in check?
+    return validSquares
 }

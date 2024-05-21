@@ -1,7 +1,5 @@
-import {pawnSVG} from './pieceSVGs.js'
 import dragElement from './drag.js'
 import moveHandler from './moveHandler.js';
-//import fetchPawn from './setupBoard.js'
 
 
 function createChessboard() {
@@ -33,9 +31,6 @@ function createChessboard() {
         
       }
     }
-    /* const highlightHolder = document.createElement('div')
-    highlightHolder.id = 'highlightHolder'
-    board.appendChild(highlightHolder) */
   }
 
 // Inputs: pieceType, location
@@ -65,6 +60,7 @@ function addPieces(location) {
   pieceHolder.style.left = letter * 50 + 'px'
 
   pieceHolder.addEventListener("pointerdown",  function () {
+    //let drag;
     console.log("Created event listener")
 
     let timerId
@@ -73,29 +69,29 @@ function addPieces(location) {
     document.addEventListener('click', handleClick)
 
     function handlePointerDown() {
-        // Start the timer for a long press
-        timerId = setTimeout(handleClickAndHold, 50); // Adjust the time threshold as needed
+        timerId = setTimeout(handleClickAndHold, 50); 
     }
     
     function handlePointerUp() {
-        // If mouse is released before the timer expires, clear the timer
         clearTimeout(timerId);
     }
     
     function handleClick() {
-        // Handle regular click action
-        console.log('Clicked');
+        cleanEventHandlers()
+        moveHandler(pieceHolder, false)
     }
     
     function handleClickAndHold() {
-        // Handle click-and-hold action
-        console.log('Held');
+        cleanEventHandlers()
+        moveHandler(pieceHolder, true)
+      }
+
+    function cleanEventHandlers(){ 
+      document.removeEventListener('pointerdown', handlePointerDown)
+      document.removeEventListener('pointerup', handlePointerUp)
+      document.removeEventListener('click', handleClick)
+      console.log("REMOVED EVENT LISTENERS")
     }
-
-    //moveHandler(pieceHolder)
-    // Create arguments we pass to moveHolder that stipulate what kinda dealio we're looking at.
-    // Make the moveHandler as modular is possible to prevent the gay.
-
   })
 }
 
@@ -123,68 +119,4 @@ function addMoveDot() {
   //square.appendChild(svgElement)
 
 }
-//fetchPawn();
-//addPawn()
 
-// So this shit doesn't work in a function
-/* 
-function dragElement(elmnt) {
-  var pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
-  if (document.getElementById(elmnt.id + "header")) {
-      // if present, the header is where you move the DIV from:
-      document.getElementById(elmnt.id + "header").onmousedown = dragMouseDown;
-  } else {
-      // otherwise, move the DIV from anywhere inside the DIV:
-      elmnt.onmousedown = dragMouseDown;
-      console.log("Made dragable ", elmnt)
-  }
-
-function dragMouseDown(event) {
-      event = event || window.event;
-      event.preventDefault();
-      // get the mouse cursor position at startup:
-      pos3 = event.clientX;
-      pos4 = event.clientY;
-      document.onmouseup = closeDragElement;
-      // call a function whenever the cursor moves:
-      document.onmousemove = elementDrag;
-  }
-
-function elementDrag(event) {
-      event = event || window.event;
-      event.preventDefault();
-      // calculate the new cursor position:
-      pos1 = pos3 - event.clientX;
-      pos2 = pos4 - event.clientY;
-      pos3 = event.clientX;
-      pos4 = event.clientY;
-      // set the element's new position:
-      elmnt.style.top = (elmnt.offsetTop - pos2) + "px";
-      elmnt.style.left = (elmnt.offsetLeft - pos1) + "px";
-  }
-
-function closeDragElement() {
-      // stop moving when mouse button is released:
-      document.onmouseup = null;
-      document.onmousemove = null;
-      snap()
-      }
-
-function snap() {
-  const child = elmnt.getBoundingClientRect()
-  const board = document.querySelector('.board')
-  const parent = board.getBoundingClientRect()
-
-  let relativePos = {
-    top: child.top - parent.top,
-    left: child.left - parent.left
-  }
-  console.log("Relative pos: ", relativePos)
-  let relativeTop = Math.round((child.top - parent.top) / 50)  * 50
-  let relativeLeft = Math.round((child.left - parent.left) / 50)  * 50
-
-  elmnt.style.top = relativeTop + 'px'
-  elmnt.style.left = relativeLeft + 'px'
-  }
-  
-} */

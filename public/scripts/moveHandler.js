@@ -17,8 +17,11 @@ export default function moveHandler(piece, drag) {
 
     let highlightedSquares = []
     for (let i = 0; i < validSquares.length; i++) {
-        const square = document.querySelector('#'+ validSquares[i])
-        const child = document.querySelector('#'+ validSquares[i]).children[0]
+        /* const square = document.querySelector('#'+ validSquares[i])
+        const child = document.querySelector('#'+ validSquares[i]).children[0] */
+        const square = document.getElementById(validSquares[i])
+        const child = document.getElementById(validSquares[i]).children[0]
+        console.log("CHILD: ", child)
 
         child.classList.remove('hidden')
         highlightedSquares.push(square)
@@ -108,10 +111,16 @@ function generateValidMoves(piece) {
     let validSquares = []
     const pieceType = piece.getAttribute('data-piece')
     const team = piece.getAttribute('data-team')
-    const startingPos = pixelsToCoord({top: piece.style.top, left: piece.style.left})
-    const startingCol = startingPos.charAt(0)
-    const startingRow = startingPos.charAt(1)
+    //const startingPos = pixelsToCoord({top: piece.style.top, left: piece.style.left})
+    //const startingCol = startingPos.charAt(0)
+    //const startingRow = startingPos.charAt(1)
     const moved = "true" === piece.getAttribute('data-moved')
+
+
+    // Number based index
+
+    const startSquare = piece.getAttribute('data-square')
+
 
     pawn()
     // pawn
@@ -125,19 +134,43 @@ function generateValidMoves(piece) {
     TODO -> implement promotions
     */
 
-
+    // TODO -> ATTACKS ON PIECES
         if (!moved) {
             // take current pos and move 2 ranks "forward"
+            /*  Using chess notation for squares
             for (let i = 1; i < 3; i++) {
                 //console.log("Valid squares include: ", startingCol + (parseInt(startingRow) + i))
                 validSquares.push(startingCol + (parseInt(startingRow) + i))
+            } */
+
+            for (let i = 1; i < 3; i++) {
+                validSquares.push(parseInt(startSquare) - 8 * i)
+                console.log("Valid square: ", parseInt(startSquare) - 8 * i)
             }
         } else { 
-            validSquares.push(startingCol + (parseInt(startingRow) + 1))
+            validSquares.push(parseInt(startSquare) - 8)
         }
     }
     // horizontalCast
 
+    function horizontalCast() {
+        // take col, iterate through all given places
+        // if blocked, stop
+        // left until blocked
+        const letters = ['a','b','c','d','e','f','g','h']
+
+        for (let i = letters.indexOf(startingCol) + 1; i > 0; i--) {
+            // is the space occupied?
+                // We can have a thing on the main file that has a board representation, check what we got
+        }
+        
+        // right until blocked
+        // foward until blocked
+        // backward until blocked
+        
+
+        // take row, iterate through all given places
+    }
     // diagonalCast
 
     // oneAround

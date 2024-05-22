@@ -30,3 +30,7 @@ const snappedPosition = snapToGrid(piecePosition.x, piecePosition.y);
 
 console.log('Snapped position:', snappedPosition);
 
+ISSUE 
+    -> Drag script is having conflicts with moveHandler -> may need to axe the snap function in the 
+    drag.js in favor of having everything be handled within moveHandler alone
+    
